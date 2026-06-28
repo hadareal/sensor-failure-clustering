@@ -62,10 +62,12 @@ The work was structured in several steps:
    - all 20 sensors
    - the top 5 selected sensors
 
-   The best-performing model was **Label Spreading on the top 5 sensors**.
+   I also tested fully supervised baselines (Logistic Regression, Random Forest) to verify whether
+   the semi-supervised approach was actually necessary. The best-performing model was
+   **Random Forest on the top 5 sensors** (LOO accuracy 0.725, balanced accuracy 0.717).
 
 6. **Final prediction**
-   I trained the final Label Spreading model on the full dataset and used it to assign predicted labels to all **1,560 unlabeled failures**, together with a confidence score for each prediction.
+   I trained the final Random Forest model on all 40 labeled failures and used it to assign predicted labels to all **1,560 unlabeled failures**, together with a confidence score for each prediction.
 
 ---
 
@@ -73,18 +75,26 @@ The work was structured in several steps:
 
 The final selected model was:
 
-- **Model:** Label Spreading
+- **Model:** Random Forest
 - **Feature set:** Top 5 discriminative sensors
 - **Evaluation:** Leave-one-out validation on the 40 labeled failures
-- **Accuracy:** **0.525** (leave-one-out, leakage-free — sensor selection re-computed per fold)
+- **Accuracy:** **0.725** (balanced accuracy **0.717**, macro F1 **0.723**)
 
 The final model produced predictions for all **1,560 unlabeled machine failures**.
 
-Using a confidence threshold of **0.8**, the model produced:
+Using a confidence threshold of **0.7** (LOO-validated: 0.857 accuracy on 35% of the labeled set):
 
-- **1,133 high-confidence predictions**
+- **524 high-confidence predictions**
+
+Using a stricter threshold of **0.8** (LOO-validated: 1.000 accuracy on 25% of the labeled set):
+
+- **237 high-confidence predictions**
+
+> **Note:** Confidence estimates are based on leave-one-out evaluation on 40 labeled samples
+> and should be treated as indicative until validated on additional labeled data.
 
 The final predictions are saved in:
 
 ```text
-outputs/final_label_spreading_predictions.csv
+outputs/final_rf_predictions.csv
+```
