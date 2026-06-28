@@ -15,7 +15,7 @@ The goal of this project is to use the small labeled subset together with the la
 
 ## Repository Structure
 
-- `notebooks/01_sensor_clustering.ipynb`  
+- `notebook/01_sensor_clustering.ipynb`  
   Main notebook containing the full analysis, experiments, evaluation, and final prediction pipeline.
 
 - `outputs/`  
@@ -76,7 +76,7 @@ The final selected model was:
 - **Model:** Label Spreading
 - **Feature set:** Top 5 discriminative sensors
 - **Evaluation:** Leave-one-out validation on the 40 labeled failures
-- **Accuracy:** **0.675**
+- **Accuracy:** **0.525** (leave-one-out, leakage-free — sensor selection re-computed per fold)
 
 The final model produced predictions for all **1,560 unlabeled machine failures**.
 
